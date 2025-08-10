@@ -1,45 +1,113 @@
-# Full-stack JWT Auth (Node + React)
+# 🔐 Odoo Auth Project
 
-This project contains a minimal JWT authentication backend (Node.js + Express + MongoDB) and a React frontend (Vite + React Router + Axios + Tailwind).
+A full-stack authentication system built with React frontend and Node.js backend, featuring JWT authentication and MongoDB database.
 
-## Setup
+## 🚀 Quick Start
 
-Prerequisites: Node.js 18+, npm, MongoDB running locally or via Docker.
+### For Windows Users
+```bash
+# Double-click setup.bat or run in Command Prompt
+setup.bat
+```
 
-### Backend
+### For Unix/Linux/macOS Users
+```bash
+# Make script executable and run
+chmod +x setup.sh
+./setup.sh
+```
 
-1. Open a terminal:
-   - `cd backend`
-   - `npm install`
-   - Copy env file: PowerShell → `copy .env.example .env`
-   - Edit `.env` (set `MONGO_URI` and `JWT_SECRET`)
-   - Start: `npm run dev`
+### Manual Setup
+```bash
+# Install all dependencies
+npm run install:all
 
-API runs at `http://localhost:5000`.
+# Copy environment files
+cp backend/env.example backend/.env
+cp frontend/env.example frontend/.env
 
-### Frontend
+# Edit .env files with your configuration
+# Then start development servers
+npm run dev
+```
 
-1. Open another terminal:
-   - `cd frontend`
-   - `npm install`
-   - Optional: create `frontend/.env` with `VITE_API_URL=http://localhost:5000`
-   - Start: `npm run dev`
+## 📁 Project Structure
 
-App runs at `http://localhost:5173`.
+```
+login/
+├── backend/          # Node.js + Express API
+├── frontend/         # React + Vite application
+├── setup.bat         # Windows setup script
+├── setup.sh          # Unix/Linux/macOS setup script
+├── SETUP.md          # Detailed setup guide
+└── package.json      # Root project scripts
+```
 
-## Endpoints
+## 🛠️ Development
 
-- `POST /auth/signup` → { name, email, password } → returns `{ token, user }`
-- `POST /auth/login` → { email, password } → returns `{ token, user }`
-- `GET /auth/profile` (protected) → Authorization: Bearer `<token>` → returns `{ user }`
+```bash
+# Start both backend and frontend in development mode
+npm run dev
 
-## Do we need a database for auth tokens?
+# Start only backend
+npm run dev:backend
 
-- For verifying JWTs: no database is required. JWTs are self-contained and verified using `JWT_SECRET`.
-- For users and credentials: yes, a database is recommended to persist users and check passwords during login. This repo uses MongoDB via Mongoose.
-- For token revocation/blacklist (logout everywhere, forced logout): a datastore (DB/Redis) is needed to track invalidated tokens or use short-lived JWTs with refresh tokens stored server-side.
+# Start only frontend
+npm run dev:frontend
+```
 
-## Switch to MySQL
+## 🌐 Access Points
 
-Use an ORM (Prisma/Sequelize). Replace Mongoose calls in `backend/models/User.js` and DB connection in `backend/config/db.js` with ORM equivalents. Keep fields: `id, name, email (unique), password (hashed), createdAt, updatedAt`.
+- **Frontend**: http://localhost:5173
+- **Backend API**: http://localhost:5000
+- **Health Check**: http://localhost:5000/health
+
+## 📚 Documentation
+
+- **Setup Guide**: [SETUP.md](./SETUP.md) - Comprehensive setup instructions
+- **Troubleshooting**: See SETUP.md for common issues and solutions
+
+## 🔧 Requirements
+
+- Node.js 16+
+- npm 8+
+- MongoDB (local or cloud)
+
+## 📝 Environment Variables
+
+### Backend (.env)
+```env
+MONGO_URI=mongodb://localhost:27017/odoo_auth
+PORT=5000
+JWT_SECRET=your-secret-key
+JWT_EXPIRES_IN=24h
+ALLOWED_ORIGINS=http://localhost:3000,http://localhost:5173
+```
+
+### Frontend (.env)
+```env
+VITE_API_URL=http://localhost:5000
+```
+
+## 🚀 Production
+
+```bash
+# Build both applications
+npm run build
+
+# Start production servers
+npm start
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## 📄 License
+
+MIT License - see LICENSE file for details
 
